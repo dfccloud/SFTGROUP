@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFT Member Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body class="bg-gray-950 text-white p-4">
+
+    <div class="max-w-4xl mx-auto space-y-6">
+        
+        <!-- INCENTIVE $100,000 BANNER -->
+        <div class="bg-gradient-to-r from-yellow-600 via-red-600 to-purple-700 p-5 rounded-2xl border-2 border-yellow-400 shadow-2xl text-center">
+            <h2 class="text-xl md:text-2xl font-black text-yellow-300 tracking-wider animate-pulse">
+                🎁 INCENTIVE $100,000 AFTER 2.8 YEARS BY JUST HOLDING $50 🎁
+            </h2>
+            <p class="text-xs text-gray-200 mt-1 font-semibold">
+                Hold minimum $50 in Assets Balance to unlock $100,000 incentive!
+            </p>
+            
+            <div class="mt-3 bg-black bg-opacity-60 py-2 px-4 rounded-xl inline-block border border-yellow-500/50">
+                <span class="text-xs text-yellow-400 block font-bold mb-1">COUNTDOWN TO $100,000 REWARD:</span>
+                <span id="incentiveTimer" class="font-mono text-lg md:text-2xl font-bold text-green-400">
+                    LOCKED (DEPOSIT $50 TO START)
+                </span>
+            </div>
+        </div>
+
+        <div class="flex justify-between items-center border-b border-gray-800 pb-4">
+            <h1 class="text-2xl font-bold text-blue-500">MEMBER DASHBOARD</h1>
+            <a href="tasks.html" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold px-4 py-2 rounded">TASKS</a>
+        </div>
+
+        <!-- Financial Counters -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <!-- Asset Balance -->
+            <div class="bg-gray-900 border border-green-500 p-4 rounded-xl">
+                <p class="text-xs text-gray-400 font-bold mb-1">ASSETS BALANCE (USDT)</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-green-500 font-bold">$</span>
+                    <span id="assetBalance" class="text-lg font-mono text-green-400">1.00000000000</span>
+                </div>
+            </div>
+
+            <!-- Mining Profits Balance -->
+            <div class="bg-gray-900 border border-yellow-500 p-4 rounded-xl">
+                <p class="text-xs text-gray-400 font-bold mb-1">MINING PROFITS (AUTO)</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-yellow-500 font-bold">$</span>
+                    <span id="miningBalance" class="text-lg font-mono text-yellow-400">0.00000000000</span>
+                </div>
+            </div>
+
+            <!-- Team Commission Balance -->
+            <div class="bg-gray-900 border border-blue-500 p-4 rounded-xl">
+                <p class="text-xs text-gray-400 font-bold mb-1">TEAMS COMMISSION</p>
+                <div class="flex items-center gap-2">
+                    <span class="text-blue-500 font-bold">$</span>
+                    <span id="commissionBalance" class="text-lg font-mono text-blue-400">0.00000000000</span>
+                </div>
+                <button onclick="claimCommission()" class="mt-2 w-full bg-blue-600 text-xs font-bold py-1 rounded">CLAIM TO ASSETS</button>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="flex gap-4">
+            <a href="deposit.html" class="w-1/2 bg-green-600 hover:bg-green-700 text-center font-bold py-3 rounded-xl">DEPOSIT</a>
+            <a href="withdraw.html" class="w-1/2 bg-red-600 hover:bg-red-700 text-center font-bold py-3 rounded-xl">WITHDRAW</a>
+        </div>
+
+        <!-- Binary Tree Link -->
+        <div class="bg-gray-900 p-4 rounded-xl border border-gray-800">
+            <a href="tree.html" class="text-blue-400 hover:underline font-bold flex items-center justify-between">
+                <span>🌳 VIEW MEMBER'S BINARY TREE</span>
+                <span>➔</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        let baseAsset = 1.00000000000;
+        let currentMining = 0.00000000000;
+        
+        function calculateMining() {
+            let ratePerSecond = (baseAsset * 0.00013888889) / 3600;
+            currentMining += ratePerSecond;
+            document.getElementById('miningBalance').innerText = currentMining.toFixed(11);
+        }
+        setInterval(calculateMining, 1000);
+
+        const TOTAL_HOLD_SECONDS = 84367200;
+
+        function startIncentiveCountdown(holdStartDate) {
+            const timerElement = document.getElementById('incentiveTimer');
+
+            function updateClock() {
+                const now = new Date().getTime();
+                const startTime = new Date(holdStartDate).getTime();
+                const elapsedTimeInSeconds = Math.floor((now - startTime) / 1000);
+                const remainingSeconds = TOTAL_HOLD_SECONDS - elapsedTimeInSeconds;
+
+                if (remainingSeconds <= 0) {
+                    timerElement.innerText = "🎉 INCENTIVE UNLOCKED! CLAIM $100,000";
+                    timerElement.className = "font-mono text-lg md:text-2xl font-bold text-yellow-300 animate-bounce";
+                    return;
+                }
+
+                const days = Math.floor(remainingSeconds / (3600 * 24));
+                const hours = Math.floor((remainingSeconds % (3600 * 24)) / 3600);
+                const minutes = Math.floor((remainingSeconds % 3600) / 60);
+                const seconds = Math.floor(remainingSeconds % 60);
+
+                timerElement.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+    </script>
+</body>
+</html>
