@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFT Group - Automatic USDT Deposit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen p-4 flex items-center justify-center">
+
+    <div class="max-w-md w-full bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-2xl space-y-6">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h1 class="text-xl font-bold text-green-500">DEPOSIT USDT (TRC20)</h1>
+            <a href="dashboard.html" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold px-3 py-1.5 rounded-lg">BACK</a>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-400 mb-1">ENTER AMOUNT (MIN $10)</label>
+                <input type="number" id="depositAmount" min="10" placeholder="50" 
+                    class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm focus:outline-none focus:border-green-500">
+            </div>
+
+            <button onclick="generateDepositGate()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg text-sm">
+                GENERATE DEPOSIT ADDRESS
+            </button>
+        </div>
+
+        <!-- Payment Details Area -->
+        <div id="paymentArea" class="hidden space-y-4 border-t border-gray-800 pt-4">
+            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 text-center">
+                <p class="text-xs text-gray-400 mb-1">SEND EXACT AMOUNT TO THIS TRC20 ADDRESS:</p>
+                <p id="trcAddress" class="text-xs font-mono text-yellow-400 break-all select-all font-bold">T-EXAMPLE-TRC20-ADDRESS-HERE</p>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-400 mb-1">TRANSACTION HASH (TXID)</label>
+                <input type="text" id="txidInput" placeholder="Paste TRC20 TXID here..." 
+                    class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm focus:outline-none focus:border-green-500">
+            </div>
+
+            <button onclick="submitDeposit()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-sm">
+                SUBMIT FOR VERIFICATION
+            </button>
+        </div>
+
+        <p id="depositStatus" class="text-xs text-center font-bold"></p>
+    </div>
+
+    <script>
+        function generateDepositGate() {
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            const status = document.getElementById('depositStatus');
+            if (!amount || amount < 10) {
+                status.innerText = '⚠️ Minimum deposit amount is $10';
+                status.className = 'text-xs text-center font-bold text-red-500';
+                return;
+            }
+            document.getElementById('paymentArea').classList.remove('hidden');
+            status.innerText = '';
+        }
+
+        async function submitDeposit() {
+            const txid = document.getElementById('txidInput').value;
+            const status = document.getElementById('depositStatus');
+            if (!txid) {
+                status.innerText = '⚠️ Please enter a valid Transaction Hash (TXID)';
+                status.className = 'text-xs text-center font-bold text-red-500';
+                return;
+            }
+            status.innerText = '⏳ Deposit request submitted! Pending admin verification.';
+            status.className = 'text-xs text-center font-bold text-yellow-500';
+        }
+    </script>
+</body>
+</html>
