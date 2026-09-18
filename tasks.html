@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFT Group - Daily Tasks</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen p-4 flex items-center justify-center">
+
+    <div class="max-w-md w-full bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-2xl space-y-6">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h1 class="text-xl font-bold text-yellow-500">DAILY MINING TASKS</h1>
+            <a href="dashboard.html" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold px-3 py-1.5 rounded-lg">BACK</a>
+        </div>
+
+        <div class="space-y-4">
+            <!-- Task Item 1 -->
+            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 flex justify-between items-center">
+                <div>
+                    <h3 class="text-sm font-bold text-gray-200">Task #1: Claim Daily Hashrate</h3>
+                    <p class="text-xs text-gray-400">Boost mining power by +0.05 USDT</p>
+                </div>
+                <button onclick="claimTask(1)" class="bg-yellow-500 hover:bg-yellow-600 text-black text-xs font-bold px-3 py-1.5 rounded-lg">
+                    CLAIM
+                </button>
+            </div>
+
+            <!-- Task Item 2 -->
+            <div class="bg-gray-950 p-4 rounded-xl border border-gray-800 flex justify-between items-center">
+                <div>
+                    <h3 class="text-sm font-bold text-gray-200">Task #2: Share Referral Link</h3>
+                    <p class="text-xs text-gray-400">Earn bonus on binary balance</p>
+                </div>
+                <button onclick="claimTask(2)" class="bg-yellow-500 hover:bg-yellow-600 text-black text-xs font-bold px-3 py-1.5 rounded-lg">
+                    CLAIM
+                </button>
+            </div>
+        </div>
+
+        <p id="taskStatus" class="text-xs text-center font-bold"></p>
+    </div>
+
+    <script>
+        function claimTask(id) {
+            const status = document.getElementById('taskStatus');
+            status.innerText = `✅ Task #${id} claimed successfully!`;
+            status.className = 'text-xs text-center font-bold text-green-500';
+        }
+    </script>
+</body>
+</html>
