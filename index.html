@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFT Group - Secure Forex & Mining Platform</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen flex items-center justify-center p-4">
+
+    <div class="max-w-md w-full bg-gray-900 border border-gray-800 rounded-2xl p-6 shadow-2xl space-y-6">
+        
+        <!-- Header / Logo -->
+        <div class="text-center">
+            <h1 class="text-3xl font-black text-blue-500 tracking-wider">SFT GROUP</h1>
+            <p class="text-xs text-gray-400 mt-1">Automated USDT Mining & Binary Platform</p>
+        </div>
+
+        <!-- Incentive Banner -->
+        <div class="bg-gradient-to-r from-yellow-600 via-red-600 to-purple-700 p-3 rounded-xl text-center border border-yellow-400">
+            <p class="text-xs font-bold text-yellow-300">🎁 $100,000 INCENTIVE REWARD 🎁</p>
+            <p class="text-[10px] text-gray-200 mt-0.5">Hold min $50 in Assets Balance for 2.8 Years</p>
+        </div>
+
+        <!-- Form Toggle Tabs -->
+        <div class="flex border-b border-gray-800">
+            <button id="loginTabBtn" onclick="toggleAuthForm('login')" class="w-1/2 py-2 text-sm font-bold border-b-2 border-blue-500 text-blue-500">
+                LOG IN
+            </button>
+            <button id="signupTabBtn" onclick="toggleAuthForm('signup')" class="w-1/2 py-2 text-sm font-bold border-b-2 border-transparent text-gray-400">
+                SIGN UP
+            </button>
+        </div>
+
+        <!-- Auth Form -->
+        <form id="authForm" onsubmit="handleAuth(event)" class="space-y-4">
+            <input type="hidden" id="formType" value="login">
+
+            <!-- Email -->
+            <div>
+                <label class="block text-xs font-bold text-gray-400 mb-1">EMAIL ADDRESS</label>
+                <input type="email" id="authEmail" required placeholder="user@example.com" 
+                    class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500">
+            </div>
+
+            <!-- Password -->
+            <div>
+                <label class="block text-xs font-bold text-gray-400 mb-1">PASSWORD</label>
+                <input type="password" id="authPassword" required placeholder="••••••••" 
+                    class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500">
+            </div>
+
+            <!-- Additional Fields for Signup Only -->
+            <div id="signupFields" class="space-y-4 hidden">
+                <!-- Binary Position Selection -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">BINARY POSITION</label>
+                    <select id="authPosition" class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500">
+                        <option value="LEFT">LEFT TEAM</option>
+                        <option value="RIGHT">RIGHT TEAM</option>
+                    </select>
+                </div>
+
+                <!-- Upline / Referral Member ID -->
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 mb-1">REFERRAL UPLINE ID (OPTIONAL)</label>
+                    <input type="text" id="authUpline" placeholder="Enter sponsor Member ID" 
+                        class="w-full bg-gray-950 border border-gray-800 rounded-lg p-3 text-sm focus:outline-none focus:border-blue-500">
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submitBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-sm tracking-wide transition">
+                LOG IN TO DASHBOARD
+            </button>
+        </form>
+
+        <p id="authMessage" class="text-xs text-center font-bold"></p>
+    </div>
+
+    <script>
+        function toggleAuthForm(type) {
+            const signupFields = document.getElementById('signupFields');
+            const submitBtn = document.getElementById('submitBtn');
+            const formType = document.getElementById('formType');
+            const loginTabBtn = document.getElementById('loginTabBtn');
+            const signupTabBtn = document.getElementById('signupTabBtn');
+            const message = document.getElementById('authMessage');
+
+            message.innerText = '';
+            formType.value = type;
+
+            if (type === 'signup') {
+                signupFields.classList.remove('hidden');
+                submitBtn.innerText = 'CREATE ACCOUNT ($1 BONUS)';
+                submitBtn.className = 'w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-lg text-sm tracking-wide transition';
+                signupTabBtn.className = 'w-1/2 py-2 text-sm font-bold border-b-2 border-green-500 text-green-500';
+                loginTabBtn.className = 'w-1/2 py-2 text-sm font-bold border-b-2 border-transparent text-gray-400';
+            } else {
+                signupFields.classList.add('hidden');
+                submitBtn.innerText = 'LOG IN TO DASHBOARD';
+                submitBtn.className = 'w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg text-sm tracking-wide transition';
+                loginTabBtn.className = 'w-1/2 py-2 text-sm font-bold border-b-2 border-blue-500 text-blue-500';
+                signupTabBtn.className = 'w-1/2 py-2 text-sm font-bold border-b-2 border-transparent text-gray-400';
+            }
+        }
+    </script>
+</body>
+</html>
