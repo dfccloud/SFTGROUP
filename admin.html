@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SFT Group - Admin Control Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/config.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body class="bg-gray-950 text-white min-h-screen p-4">
+
+    <div class="max-w-4xl mx-auto space-y-6">
+        <div class="flex justify-between items-center border-b border-gray-800 pb-3">
+            <h1 class="text-2xl font-bold text-purple-500">ADMIN CONTROL PANEL</h1>
+            <a href="dashboard.html" class="text-xs bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold px-3 py-1.5 rounded-lg">EXIT ADMIN</a>
+        </div>
+
+        <!-- Pending Deposit Verifications -->
+        <div class="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-4">
+            <h2 class="text-sm font-bold text-yellow-400 border-b border-gray-800 pb-2">PENDING DEPOSIT VERIFICATIONS</h2>
+            <div id="depositList" class="text-xs text-gray-400 italic">
+                No pending deposits found.
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
